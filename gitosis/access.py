@@ -11,6 +11,8 @@ def pathMatchPatterns(path, repos):
     The pattern definition is the as fnmatch.fnmatch.
     """
     for repo in repos:
+        if repo == '@all' and path != 'gitosis-admin':
+            return True
         if fnmatch(path, repo):
             return True
     return False
