@@ -130,6 +130,7 @@ In your clone of ``gitosis-admin``, edit ``gitosis.conf`` and add::
 	members = jdoe
 	writable = myproject
 
+
 Commit that change and push. Then create the initial commit and push
 it::
 
@@ -147,9 +148,20 @@ repository too.
 Example configuration
 =====================
 
-.. include:: example.conf
-   :literal:
+    # All repos in readonly
+    [group all_repos_ro]
+    readonly = @all
+    members = jenkins builder
 
+    # Mirroring all repos
+    [mirror all_repos]
+    repos = @all
+    uri = git@host:external/%s.git
+
+    # MIrrorina all repos without test1
+    [mirror all_ex_repos]
+    repos = !test1 @all
+    uri = git@host:external/%s.git
 
 Using git-daemon
 ================

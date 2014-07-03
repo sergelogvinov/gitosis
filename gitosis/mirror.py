@@ -9,6 +9,7 @@ import logging
 
 from gitosis import repository
 from gitosis import util
+from fnmatch import fnmatch
 
 
 def push_mirrors(config, git_dir):
@@ -72,9 +73,15 @@ def get_mirrors(config, git_name):
     for section in mirror_sections:
         try:
             repos = config.get(section, 'repos')
-            if repos == '@all' or git_name in repos.split():
-                yield config.get(section, 'uri').strip() % git_name
+
+            for repo in repos.split():
+                if fnmatch('!%s' % git_name, repo):
+                    return
+
+            if '@all' in repos.split() or git_name in repos.split():
+                yield config.get(section, 'uri').replace('%s', '%(repo)s').strip() % {'repo': git_name}
+
         except NoOptionError:
             log.error('%s section is lacking the "repos" or "uri" settings.', section)
-        
-    
+
+
