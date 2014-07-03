@@ -148,20 +148,23 @@ repository too.
 Example configuration
 =====================
 
-    # All repos in readonly
-    [group all_repos_ro]
-    readonly = @all
-    members = jenkins builder
+All repos in readonly::
 
-    # Mirroring all repos
-    [mirror all_repos]
-    repos = @all
-    uri = git@host:external/%s.git
+	[group all_repos_ro]
+	readonly = @all
+	members = jenkins builder
 
-    # MIrrorina all repos without test1
-    [mirror all_ex_repos]
-    repos = !test1 @all
-    uri = git@host:external/%s.git
+Mirroring all repos::
+
+	[mirror all_repos]
+	repos = @all
+	uri = git@host:external/%s.git
+
+Mirrorina all repos without test1::
+
+	[mirror all_ex_repos]
+	repos = !test1 @all
+	uri = git@host:external/%s.git
 
 Using git-daemon
 ================
